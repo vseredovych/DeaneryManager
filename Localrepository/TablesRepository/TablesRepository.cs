@@ -1,12 +1,13 @@
-﻿using System;
+﻿using LocalRepository.LocalDatabase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyDbVsRi
+namespace LocalRepository
 {
-    class TablesRepository
+    public class TablesRepository
     {
         public List<Table> Tables { get; set; }
 

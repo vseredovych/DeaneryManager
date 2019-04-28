@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyDbVsRi
+namespace LocalRepository
 {
-    class FileHelper
+    public class FileHelper
     {
         string folderName;
         string workDirectoryPath;

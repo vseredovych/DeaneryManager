@@ -4,9 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.Entities;
+using LocalRepository.Entities;
+using LocalRepository;
 
-namespace MyDbVsRi
+namespace LocalRepository.LocalDatabase
 {
     public class Database
     {
