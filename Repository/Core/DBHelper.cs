@@ -1,23 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Data.Common;
-using System.Configuration;
 using System.Data;
 
-namespace DAL.Helper
+namespace Repository.Core
 {
-    public class SqlHelper
+    public class DbHelper
     {
         private static string invariant = "MySql.Data.MySqlClient";
-
-        public DbConnection createConnection()
+        public DbConnection CreateConnection()
         {
             DbProviderFactory factory = DbProviderFactories.GetFactory(invariant);
             DbConnection connection = factory.CreateConnection();
-            connection.ConnectionString = ConfigurationManager.ConnectionStrings["MySql"].ConnectionString;
+            connection.ConnectionString = ConfigurationSetting.ConnectionString;
 
             return connection;
         }
-        public void closeConnection(DbConnection connection)
+        public void CloseConnection(DbConnection connection)
         {
             connection.Close();
         }
@@ -31,9 +29,9 @@ namespace DAL.Helper
         }
         public DbParameter CreateDbParameter(DbConnection connection)
         {
-            return  DbProviderFactories.GetFactory(connection).CreateParameter();
+            return DbProviderFactories.GetFactory(connection).CreateParameter();
         }
-        public DbCommand CreateDbCommand( DbConnection connection)
+        public DbCommand CreateDbCommand(DbConnection connection)
         {
             return DbProviderFactories.GetFactory(connection).CreateCommand();
         }
@@ -57,7 +55,7 @@ namespace DAL.Helper
 
         public DbParameter CreateParameter(string name, int size, object value, DbType dbType, ParameterDirection direction)
         {
-            DbParameter parameter = CreateDbParameter(createConnection());
+            DbParameter parameter = CreateDbParameter(CreateConnection());
             parameter.DbType = dbType;
             parameter.ParameterName = name;
             parameter.Size = size;
@@ -69,7 +67,7 @@ namespace DAL.Helper
 
         public void CommandExecuteNonQuery(string commandText, List<DbParameter> parameters)
         {
-            using (var connection = this.createConnection())
+            using (var connection = this.CreateConnection())
             {
                 connection.Open();
 
@@ -88,27 +86,40 @@ namespace DAL.Helper
         }
 
 
-        public DbDataReader GetDataReader(string commandText/*, List<DbParameter> parameters*/)
-        {
-            DbDataReader reader = null;
+        //public DbDataReader GetDataReader(string commandText/*, List<DbParameter> parameters*/)
+        //{
+        //    DbDataReader reader = null;
 
-            using (var connection = this.createConnection())
+        //    using (var connection = this.CreateConnection())
+        //    {
+        //        connection.Open();
+
+        //        using (var command = this.CreateDbCommand(connection, commandText))
+        //        {
+        //            //if (parameters != null)
+        //            //{
+        //            //    foreach (var parameter in parameters)
+        //            //    {
+        //            //        command.Parameters.Add(parameter);
+        //            //    }
+        //            //}
+        //            reader = command.ExecuteReader();
+        //            return reader;
+
+        //        }
+        //    }
+        //}
+        public IDataReader GetDataReader(string commandText)
+        {
+            IDataReader reader = null;
+            using (var connection = this.CreateConnection())
             {
                 connection.Open();
 
-                using (var command = this.CreateDbCommand(connection, commandText))
-                {
-                    //if (parameters != null)
-                    //{
-                    //    foreach (var parameter in parameters)
-                    //    {
-                    //        command.Parameters.Add(parameter);
-                    //    }
-                    //}
-                    reader = command.ExecuteReader();
-                    return reader;
-
-                }
+                var command = this.CreateDbCommand(connection, commandText);
+     
+                reader = command.ExecuteReader();
+                return reader;
             }
         }
     }

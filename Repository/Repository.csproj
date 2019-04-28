@@ -31,7 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Models">
+      <HintPath>..\Models\bin\Debug\Models.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,13 +45,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IFacultiesRepository.cs" />
+    <Compile Include="Abstract\IStudentsRepository.cs" />
+    <Compile Include="Abstract\ITeachersRepository.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Concrete\Operations\FacultiesRepository.cs" />
+    <Compile Include="Concrete\Operations\TeachersRepository.cs" />
+    <Compile Include="Concrete\Operations\StudentsRepository.cs" />
+    <Compile Include="Core\ConfigurationSettings.cs" />
+    <Compile Include="Core\DbHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Abstract\" />
-    <Folder Include="Concrete\Operations\" />
-    <Folder Include="Core\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

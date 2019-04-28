@@ -5,11 +5,11 @@ namespace Models.Collections
 {
     public class TeachersCollections
     {
-        private ObservableCollection<Faculties> teacher;
+        private ObservableCollection<Faculty> teacher;
 
         public TeachersCollections()
         {
-            teacher = new ObservableCollection<Faculties>();
+            teacher = new ObservableCollection<Faculty>();
         }
 
         //public void Add(Expense expense)
@@ -17,7 +17,7 @@ namespace Models.Collections
         //    expenses.Add(expense);
         //}
 
-        public ObservableCollection<Faculties> GetExpenses()
+        public ObservableCollection<Faculty> GetExpenses()
         {
             return teacher;
         }

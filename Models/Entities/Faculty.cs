@@ -1,9 +1,9 @@
 ﻿namespace Models.Entities
 {
-    public class Faculties
+    public class Faculty
     {
         public long Id { get; set; }
-        public double Name { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
     }
 }
