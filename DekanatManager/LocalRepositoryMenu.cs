@@ -9,7 +9,7 @@ using LocalRepository;
 
 namespace DekanatManager
 {
-    public class Menu
+    public class LocalRepositoryMenu
     {
         string[] tables = { "Merchants", "Products" };
         string[] mainMenuStrings = { "show Tables" };
@@ -18,22 +18,24 @@ namespace DekanatManager
         FileHelper fileHelper;
         Database dataBase;
         TablesRepository tableRepository;
-        public Menu()
+        public LocalRepositoryMenu()
         {
             fileHelper = new FileHelper();
             fileHelper.CreateFile("Tables", "TableFolder");
             dataBase = new Database(fileHelper.getFilePath());
             tableRepository = new TablesRepository();
           
-            Table merchant = dataBase.GetTableFromDatabase("Merchants");
-            Table product = dataBase.GetTableFromDatabase("Products");
+            Table teachers = dataBase.GetTableFromDatabase("Teachers");
+            Table students = dataBase.GetTableFromDatabase("Students");
+            Table faculties = dataBase.GetTableFromDatabase("Faculties");
 
-            tableRepository.AddToRepository(merchant);
-            tableRepository.AddToRepository(product);
+            dataBase.CreateEmptyTable(students);
+            dataBase.CreateEmptyTable(teachers);
+            dataBase.CreateEmptyTable(faculties);
 
-            dataBase.CreateEmptyTable(merchant);
-            dataBase.CreateEmptyTable(product);
-
+            tableRepository.AddToRepository(teachers);
+            tableRepository.AddToRepository(students);
+            tableRepository.AddToRepository(faculties);
         }
         public void MainMenu()
         {
@@ -159,7 +161,7 @@ namespace DekanatManager
         }
         void SaveTable(Table table)
         {
-            dataBase.UpdateTable(table);
+            dataBase.UpdateTable(table); 
             Console.WriteLine("Table is saved!");
         }
         void HandleIndex(ref int chooseKey, int min, int max)
@@ -181,10 +183,5 @@ namespace DekanatManager
                 Console.WriteLine(" - " + operations[i] + "\t");
             }
         }
-        //void ManuallyFillEntity()
-        //{
-        //    return Entyt
-        //}
-
     }
 }

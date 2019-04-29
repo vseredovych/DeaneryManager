@@ -11,7 +11,9 @@ namespace DekanatManager
         static void Main(string[] args)
         {
 
-            Menu menu = new Menu();
+            //LocalRepositoryMenu menu = new LocalRepositoryMenu();
+            ServerRepositoryMenu menu = new ServerRepositoryMenu();
+
             menu.MainMenu();
             Console.WriteLine("Hello World!");
         }

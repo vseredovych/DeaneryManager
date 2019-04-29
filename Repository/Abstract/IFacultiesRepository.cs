@@ -8,7 +8,7 @@ namespace Repository.Abstract
         void Insert(Faculty faculty);
         void Delete(long Id);
         void Update(Faculty faculty);
-        ObservableCollection<Faculty> GetAll();
+        ObservableCollection<IEntity> GetAll();
         Faculty GetByID(long id);
     }
 }

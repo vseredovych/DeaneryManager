@@ -3,21 +3,30 @@ using System.Collections.ObjectModel;
 
 namespace Models.Collections
 {
-    public class StudentsCollections
+    public class StudentsCollections : IEntityCollection
     {
-        private ObservableCollection<Student> students;
+        private ObservableCollection<IEntity> students;
+        public int TableCount { get; } = 6;
 
         public StudentsCollections()
         {
-            students = new ObservableCollection<Student>();
+            students = new ObservableCollection<IEntity>();
         }
 
-        //public void Add(Expense expense)
-        //{
-        //    expenses.Add(expense);
-        //}
+        public void Add(IEntity student)
+        {
+            students.Add(student);
+        }
+        public void Update(IEntity student)
+        {
+            students.Add(student);
+        }
+        public void Delete(int id)
+        {
+            //faculties.Remove(); 
+        }
 
-        public ObservableCollection<Student> GetExpenses()
+        public ObservableCollection<IEntity> GetAll()
         {
             return students;
         }

@@ -1,0 +1,28 @@
+﻿create database dekanatdb;
+
+create table Students(
+    Id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Faculty VARCHAR(50),
+    Scholarship BIGINT (50),
+    Dob DATETIME
+)
+
+create table Teachers(
+    Id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Faculty VARCHAR(50),
+    Specialty VARCHAR(50),
+    Salary BIGINT (50),
+    Dob DATETIME
+)
+
+create table Faculties(
+    Id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(50),
+    Description VARCHAR(50)
+)
+
+insert into Faculties (Id, Name, Description) VAlues ("name", "descript);

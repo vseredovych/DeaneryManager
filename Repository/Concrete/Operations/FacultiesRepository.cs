@@ -9,9 +9,9 @@ using Repository.Core;
 
 namespace Repository.Concrete.Operations
 {
-    class facultysRepository : IFacultiesRepository
+    public class FacultiesRepository : IFacultiesRepository
     {
-        string databaseTable = "faculties";
+        string databaseTable = "Faculties";
         DbHelper dbManager = new DbHelper();
         //CRUD
         public void Insert(Faculty faculty)
@@ -45,10 +45,10 @@ namespace Repository.Concrete.Operations
             dbManager.CommandExecuteNonQuery(commandText, parameters);
         }
 
-        public ObservableCollection<Faculty> GetAll()
+        public ObservableCollection<IEntity> GetAll()
         {
             string commandText = "Select * from " + databaseTable + ";";
-            ObservableCollection<Faculty> facultys = new ObservableCollection<Faculty>();
+            ObservableCollection<IEntity> facultys = new ObservableCollection<IEntity>();
 
             using (var connection = dbManager.CreateConnection())
             {

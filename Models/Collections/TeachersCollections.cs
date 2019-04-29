@@ -3,23 +3,32 @@ using System.Collections.ObjectModel;
 
 namespace Models.Collections
 {
-    public class TeachersCollections
+    public class TeachersCollections : IEntityCollection
     {
-        private ObservableCollection<Faculty> teacher;
+        private ObservableCollection<IEntity> teachers;
+        public int TableCount { get; } = 7;
 
         public TeachersCollections()
         {
-            teacher = new ObservableCollection<Faculty>();
+            teachers = new ObservableCollection<IEntity>();
         }
 
-        //public void Add(Expense expense)
-        //{
-        //    expenses.Add(expense);
-        //}
-
-        public ObservableCollection<Faculty> GetExpenses()
+        public void Add(IEntity teacher)
         {
-            return teacher;
+            teachers.Add(teacher);
+        }
+        public void Update(IEntity teacher)
+        {
+            teachers.Add(teacher);
+        }
+        public void Delete(int id)
+        {
+            //faculties.Remove(); 
+        }
+
+        public ObservableCollection<IEntity> GetAll()
+        {
+            return teachers;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Common;
 using System.Data;
+using System.Configuration;
 
 namespace Repository.Core
 {
@@ -11,7 +12,7 @@ namespace Repository.Core
         {
             DbProviderFactory factory = DbProviderFactories.GetFactory(invariant);
             DbConnection connection = factory.CreateConnection();
-            connection.ConnectionString = ConfigurationSetting.ConnectionString;
+            connection.ConnectionString = ConfigurationManager.ConnectionStrings["dekanatdb"].ConnectionString;
 
             return connection;
         }
