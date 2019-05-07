@@ -23,7 +23,7 @@ namespace Factory.Concrete
             }
             else if (name == "Teachers")
             {
-                return new Repository.Concrete.Database.Repositories.TeachersOperatinos();
+                return new Repository.Concrete.Database.Repositories.TeachersRepository();
             }
             else throw new Exception("There is no " + name + " repository!");
         }

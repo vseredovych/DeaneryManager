@@ -13,7 +13,7 @@ namespace Factory.Concrete
         public static IFactory GetFactory(string factoryType)
         {
             if (factoryType == "Database") return new DatabaseFactory();
-            //else if (factoryType == "File") return new TextFactory();
+            else if (factoryType == "File") return new FileFactory();
             else throw new Exception(string.Format("Factory \"{0}\" not exist", factoryType));
         }
     }

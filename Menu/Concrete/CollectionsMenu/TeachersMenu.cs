@@ -33,7 +33,14 @@ namespace Menu.Concrete.CollectionsMenu
                 teacher.Salary = Convert.ToInt32(Console.ReadLine());
                 Console.Write("Input Date of birth: ");
                 teacher.Dob = Convert.ToDateTime(Console.ReadLine());
-                ((TeachersRepository)teachersRepo).Insert(teacher);
+                if (teachersRepo is Repository.Concrete.Database.Repositories.TeachersRepository)
+                {
+                    ((TeachersRepository)teachersRepo).Insert(teacher);
+                }
+                else
+                {
+                    ((Repository.Concrete.File.Repositories.TeachersRepository)teachersRepo).Insert(teacher);
+                }
                 ((TeachersCollections)teachersCollection).Add(teacher);
             }
             catch (Exception ex)
@@ -44,11 +51,11 @@ namespace Menu.Concrete.CollectionsMenu
         }
         public bool Update(IRepository teachersRepo, object teachersCollection, long id)
         {
-            int index = (int)((Teacher)(((TeachersCollections)teachersCollection).GetAll()[(int)id])).Id;
-            Teacher oldTeacher = (Teacher)((TeachersRepository)teachersRepo).GetByID(index);
-            Teacher teacher = new Teacher();
             try
             {
+                int index = (int)((Teacher)(((TeachersCollections)teachersCollection).GetAll()[(int)id])).Id;
+                Teacher oldTeacher = (Teacher)((TeachersRepository)teachersRepo).GetByID(index);
+                Teacher teacher = new Teacher();
                 teacher.Id = oldTeacher.Id;
                 Console.Write("Input Firstname (" + oldTeacher.FirstName + "): ");
                 teacher.FirstName = Convert.ToString(MenuHelper.InputString(Convert.ToString(oldTeacher.FirstName)));
@@ -63,7 +70,7 @@ namespace Menu.Concrete.CollectionsMenu
                 Console.Write("Input Date of birth (" + oldTeacher.Dob + "): ");
                 teacher.Dob = Convert.ToDateTime(MenuHelper.InputString(Convert.ToString(oldTeacher.Dob)));
                 ((TeachersRepository)teachersRepo).Update(teacher);
-                ((StudentsRepository)teachersCollection).Update(teacher);
+                ((TeachersCollections)teachersCollection).Update(teacher);
             }
             catch (Exception ex)
             {
@@ -74,7 +81,14 @@ namespace Menu.Concrete.CollectionsMenu
         public bool Delete(IRepository teachersRepo, object teachersCollection, long id)
         {
             int index = (int)((Teacher)(((TeachersCollections)teachersCollection).GetAll()[(int)id])).Id;
-            ((TeachersRepository)teachersRepo).Delete(index);
+            if (teachersRepo is Repository.Concrete.Database.Repositories.TeachersRepository)
+            {
+                ((TeachersRepository)teachersRepo).Delete(index);
+            }
+            else
+            {
+                ((Repository.Concrete.File.Repositories.TeachersRepository)teachersRepo).Delete(index);
+            }
             ((TeachersCollections)teachersCollection).Delete(index);
 
             return true;

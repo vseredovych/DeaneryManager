@@ -47,7 +47,6 @@
     <Compile Include="Concrete\CollectionsMenu\TeachersMenu.cs" />
     <Compile Include="Concrete\MainMenu\MainMenu.cs" />
     <Compile Include="Concrete\MainMenu\MenuHelper.cs" />
-    <Compile Include="MainMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

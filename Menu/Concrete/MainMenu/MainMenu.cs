@@ -16,6 +16,7 @@ namespace Menu.Concrete.MainMenu
 {
     public class MainMenu
     {
+        string[] databaseNames = { "Database", "File" }; 
         string[] collectionNames = { "Students", "Teachers", "Faculties" };
         string[] mainMenuStrings = { "show Tables" };
 
@@ -25,9 +26,9 @@ namespace Menu.Concrete.MainMenu
         IRepository facultiesRepo;
         List<IRepository> repositories;
         List<object> collections = new List<object>();
-        public MainMenu()
+        private void ChooseDatabase(string database)
         {
-            IFactory factory = FactoryProvider.GetFactory("Database");
+            IFactory factory = FactoryProvider.GetFactory(database);
             repositories = new List<IRepository>();
             studentsRepo = factory.GetRepository("Students");
             teachersRepo = factory.GetRepository("Teachers");
@@ -46,29 +47,30 @@ namespace Menu.Concrete.MainMenu
 
             //MenuHelper.
         }
- 
+
         public void StartMenu()
         {
             ConsoleKey action;
-            int chooseKey = 1;
+            int entityChoise = 1;
 
             do
             {
                 Console.Clear();
 
-                PrintMainMenu(ref chooseKey);
+                PrintDatabases(ref entityChoise);
                 action = Console.ReadKey(true).Key;
 
                 switch (action)
                 {
                     case ConsoleKey.UpArrow:
-                        chooseKey -= 1;
+                        entityChoise -= 1;
                         break;
                     case ConsoleKey.DownArrow:
-                        chooseKey += 1;
+                        entityChoise += 1;
                         break;
                     case ConsoleKey.Enter:
-                        CollectionsOerationsMenu(chooseKey);
+                        ChooseDatabase(databaseNames[entityChoise]);
+                        ChooseRepositoryMenu();
                         break;
                     case ConsoleKey.D2:
                         break;
@@ -78,14 +80,45 @@ namespace Menu.Concrete.MainMenu
 
             } while (action != ConsoleKey.Escape);
         }
-        public void CollectionsOerationsMenu(int choosenKey)
+        public void ChooseRepositoryMenu()
         {
             ConsoleKey action;
-            int chooseKey = 0;
+            int entityChoise = 1;
+
             do
             {
                 Console.Clear();
-                PrintCollection(choosenKey, chooseKey);
+
+                PrintMainMenu(ref entityChoise);
+                action = Console.ReadKey(true).Key;
+
+                switch (action)
+                {
+                    case ConsoleKey.UpArrow:
+                        entityChoise -= 1;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        entityChoise += 1;
+                        break;
+                    case ConsoleKey.Enter:
+                        CollectionsOerationsMenu(entityChoise);
+                        break;
+                    case ConsoleKey.D2:
+                        break;
+                    case ConsoleKey.Escape:
+                        break;
+                }
+
+            } while (action != ConsoleKey.Escape);
+        }
+        public void CollectionsOerationsMenu(int repositoryChoise)
+        {
+            ConsoleKey action;
+            int entityChoise = 0;
+            do
+            {
+                Console.Clear();
+                PrintCollection(repositoryChoise, entityChoise);
                 MenuHelper.PrintOperations();
 
                 action = Console.ReadKey(true).Key;
@@ -93,21 +126,21 @@ namespace Menu.Concrete.MainMenu
                 switch (action)
                 {
                     case ConsoleKey.UpArrow:
-                        chooseKey -= 1;
-                        MenuHelper.HandleIndex(ref chooseKey, 0, MenuHelper.DetermineCollection(collections[choosenKey]).Length(collections[choosenKey]) - 1);
+                        entityChoise -= 1;
+                        MenuHelper.HandleIndex(ref entityChoise, 0, MenuHelper.DetermineCollection(collections[repositoryChoise]).Length(collections[repositoryChoise]) - 1);
                         break;
                     case ConsoleKey.DownArrow:
-                        chooseKey += 1;
-                        MenuHelper.HandleIndex(ref chooseKey, 0, MenuHelper.DetermineCollection(collections[choosenKey]).Length(collections[choosenKey]) - 1);
+                        entityChoise += 1;
+                        MenuHelper.HandleIndex(ref entityChoise, 0, MenuHelper.DetermineCollection(collections[repositoryChoise]).Length(collections[repositoryChoise]) - 1);
                         break;
                     case ConsoleKey.D1:
-                        MenuHelper.DetermineCollection(collections[choosenKey]).Add(repositories[choosenKey], collections[choosenKey]);
+                        MenuHelper.DetermineCollection(collections[repositoryChoise]).Add(repositories[repositoryChoise], collections[repositoryChoise]);
                         break;
                     case ConsoleKey.D2:
-                        MenuHelper.DetermineCollection(collections[choosenKey]).Delete(repositories[choosenKey], collections[choosenKey], chooseKey);
+                        MenuHelper.DetermineCollection(collections[repositoryChoise]).Delete(repositories[repositoryChoise], collections[repositoryChoise], entityChoise);
                         break;
                     case ConsoleKey.D3:
-                        MenuHelper.DetermineCollection(collections[choosenKey]).Update(repositories[choosenKey], collections[choosenKey], chooseKey);
+                        MenuHelper.DetermineCollection(collections[repositoryChoise]).Update(repositories[repositoryChoise], collections[repositoryChoise], entityChoise);
                         break;
                     case ConsoleKey.D4:
                         break;
@@ -117,13 +150,13 @@ namespace Menu.Concrete.MainMenu
             } while (action != ConsoleKey.Escape);
         }
 
-        private void PrintMainMenu(ref int chooseKey)
+        private void PrintMainMenu(ref int entityChoise)
         {
             Console.WriteLine("Tables");
-            MenuHelper.HandleIndex(ref chooseKey, 0, collectionNames.Length - 1);
+            MenuHelper.HandleIndex(ref entityChoise, 0, collectionNames.Length - 1);
             for (int i = 0; i < collectionNames.Length; i++)
             {
-                if (i == chooseKey)
+                if (i == entityChoise)
                 {
                     Console.Write("-->");
                 }
@@ -131,9 +164,23 @@ namespace Menu.Concrete.MainMenu
             }
             Console.WriteLine("Enter - choose table");
         }
-        private void PrintCollection(int chosenKey, int chooseKey)
+        private void PrintDatabases(ref int entityChoise)
         {
-            MenuHelper.DetermineCollection(collections[chosenKey]).Print(collections[chosenKey], chooseKey);
+            Console.WriteLine("Databases");
+            MenuHelper.HandleIndex(ref entityChoise, 0, databaseNames.Length - 1);
+            for (int i = 0; i < databaseNames.Length; i++)
+            {
+                if (i == entityChoise)
+                {
+                    Console.Write("-->");
+                }
+                Console.WriteLine("\t" + databaseNames[i]);
+            }
+            Console.WriteLine("Enter - choose database");
+        }
+        private void PrintCollection(int entityChoise, int repositoryChoise)
+        {
+            MenuHelper.DetermineCollection(collections[entityChoise]).Print(collections[repositoryChoise], repositoryChoise);
         }
 
     }

@@ -78,14 +78,19 @@ namespace Repository.Concrete.Database.Repositories
             parameters.Add(dbManager.CreateParameter("@Id", id, DbType.Int64));
 
             string commandText = "select * from " + databaseTable + " where Id = @Id;";
-            var dataReader = dbManager.GetDataReader(commandText);
+            var dataReader = dbManager.GetDataReader(commandText, parameters);
             try
             {
                 var teacher = new Teacher();
                 while (dataReader.Read())
                 {
                     teacher.Id = Convert.ToInt64(dataReader["Id"]);
-
+                    teacher.FirstName = dataReader["FirstName"].ToString();
+                    teacher.LastName = dataReader["LastName"].ToString();
+                    teacher.Faculty = Convert.ToString(dataReader["Faculty"]);
+                    teacher.Specialty = Convert.ToString(dataReader["Specialty"]);
+                    teacher.Salary = Convert.ToDouble(dataReader["Salary"]);
+                    teacher.Dob = Convert.ToDateTime(dataReader["Dob"]);
                 }
                 return teacher;
             }

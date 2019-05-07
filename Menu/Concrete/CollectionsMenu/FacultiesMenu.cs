@@ -24,7 +24,14 @@ namespace Menu.Concrete.CollectionsMenu
                 faculty.Name = Convert.ToString(Console.ReadLine());
                 Console.Write("Input Description: ");
                 faculty.Description = Convert.ToString(Console.ReadLine());
-                ((FacultiesRepository)facultiesRepo).Insert(faculty);
+                if (facultiesRepo is Repository.Concrete.Database.Repositories.FacultiesRepository)
+                {
+                    ((FacultiesRepository)facultiesRepo).Insert(faculty);
+                }
+                else
+                {
+                    ((Repository.Concrete.File.Repositories.FacultiesRepository)facultiesRepo).Insert(faculty);
+                }
                 ((FacultiesCollection)facultiesCollection).Add(faculty);
             }
             catch (Exception ex)
@@ -35,31 +42,40 @@ namespace Menu.Concrete.CollectionsMenu
         }
         public bool Update(IRepository facultiesRepo, object facultiesCollection, long id)
         {
-            int index = (int)((Faculty)(((FacultiesCollection)facultiesCollection).GetAll()[(int)id])).Id;
-            Faculty oldFaculty = (Faculty)((FacultiesRepository)facultiesRepo).GetByID(index);
-            Faculty faculty = new Faculty();
-
             try
             {
+                int index = (int)((Faculty)(((FacultiesCollection)facultiesCollection).GetAll()[(int)id])).Id;
+                Faculty oldFaculty = (Faculty)((FacultiesRepository)facultiesRepo).GetByID(index);
+                Faculty faculty = new Faculty();
+
+
                 faculty.Id = oldFaculty.Id;
                 Console.Write("Input Name (" + oldFaculty.Name + "): ");
                 faculty.Name = Convert.ToString(MenuHelper.InputString(Convert.ToString(oldFaculty.Name)));
                 Console.Write("Input Description (" + oldFaculty.Description + "): ");
                 faculty.Description = Convert.ToString(MenuHelper.InputString(Convert.ToString(oldFaculty.Description)));
+                  ((FacultiesRepository)facultiesRepo).Update(faculty);
+            ((FacultiesCollection)facultiesCollection).Update(faculty);
+          
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
 
-            ((FacultiesRepository)facultiesRepo).Update(faculty);
-            ((FacultiesCollection)facultiesCollection).Update(faculty);
             return true;
         }
         public bool Delete(IRepository facultiesRepo, object facultiesCollection, long id)
         {
             int index = (int)((Faculty)(((FacultiesCollection)facultiesCollection).GetAll()[(int)id])).Id;
-            ((FacultiesRepository)facultiesRepo).Delete(index);
+            if (facultiesRepo is Repository.Concrete.Database.Repositories.FacultiesRepository)
+            {
+                ((FacultiesCollection)facultiesRepo).Delete(index);
+            }
+            else
+            {
+                ((Repository.Concrete.File.Repositories.FacultiesRepository)facultiesRepo).Delete(index);
+            }
             ((FacultiesCollection)facultiesCollection).Delete(index);
 
             return true;

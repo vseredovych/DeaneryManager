@@ -30,7 +30,14 @@ namespace Menu.Concrete.CollectionsMenu
                 student.Scholarship = Convert.ToInt32(Console.ReadLine());
                 Console.Write("Input Date of birth: ");
                 student.Dob = Convert.ToDateTime(Console.ReadLine());
-                ((StudentsRepository)studentsRepo).Insert(student);
+                if (studentsRepo is Repository.Concrete.Database.Repositories.StudentsRepository)
+                {
+                    ((StudentsRepository)studentsRepo).Insert(student);
+                }
+                else
+                {
+                    ((Repository.Concrete.File.Repositories.StudentsRepository)studentsRepo).Insert(student);
+                }
                 ((StudentsCollections)studentsCollection).Add(student);
                 return true;
             }
@@ -42,11 +49,12 @@ namespace Menu.Concrete.CollectionsMenu
         }
         public bool Update(IRepository studentsRepo, object studentsCollection, long id)
         {
-            int index = (int)((Student)(((StudentsCollections)studentsCollection).GetAll()[(int)id])).Id;
-            Student oldStudent = (Student)((StudentsRepository)studentsRepo).GetByID(index);
-            Student student = new Student();
             try
             {
+                int index = (int)((Student)(((StudentsCollections)studentsCollection).GetAll()[(int)id])).Id;
+                Student oldStudent = (Student)((StudentsRepository)studentsRepo).GetByID(index);
+                Student student = new Student();
+         
                 student.Id = oldStudent.Id;
                 Console.Write("Input Firstname (" + oldStudent.FirstName + "): ");
                 student.FirstName = Convert.ToString(MenuHelper.InputString(Convert.ToString(oldStudent.FirstName)));
@@ -73,7 +81,14 @@ namespace Menu.Concrete.CollectionsMenu
         public bool Delete(IRepository studentsRepo, object studentsCollection, long id)
         {
             int index = (int)((Student)(((StudentsCollections)studentsCollection).GetAll()[(int)id])).Id;
-            ((StudentsRepository)studentsRepo).Delete(index) ;
+            if (studentsRepo is Repository.Concrete.Database.Repositories.StudentsRepository)
+            {
+                ((StudentsRepository)studentsRepo).Delete(index);
+            }
+            else
+            {
+                ((Repository.Concrete.File.Repositories.StudentsRepository)studentsRepo).Delete(index);
+            }
             ((StudentsCollections)studentsCollection).Delete(index);
 
             return true;

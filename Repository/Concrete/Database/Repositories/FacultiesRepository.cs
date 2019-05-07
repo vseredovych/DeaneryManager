@@ -70,14 +70,15 @@ namespace Repository.Concrete.Database.Repositories
             parameters.Add(dbManager.CreateParameter("@Id", id, DbType.Int64));
 
             string commandText = "select * from " + databaseTable + " where Id = @Id;";
-            var dataReader = dbManager.GetDataReader(commandText);
+            var dataReader = dbManager.GetDataReader(commandText, parameters);
             try
             {
                 var faculty = new Faculty();
                 while (dataReader.Read())
                 {
                     faculty.Id = Convert.ToInt64(dataReader["Id"]);
-
+                    faculty.Name = Convert.ToString(dataReader["Name"]);
+                    faculty.Description = Convert.ToString(dataReader["Description"]);
                 }
                 return faculty;
             }

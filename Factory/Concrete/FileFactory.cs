@@ -4,26 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Factory.Abstract;
+using Repository.Concrete.File;
+using Repository.Abstract;
 
 namespace Factory.Concrete
 {
-    //public class FileFactory : IFactory
-    //{
-    //    public IRepository<> GetRepository(string name)
-    //    {
-    //        if (name == "Users")
-    //        {
-    //            return new Repository.Concrete.Textbase.UsersRepo();
-    //        }
-    //        else if (name == "Documents")
-    //        {
-    //            return new Repository.Concrete.Textbase.DocumentsRepo();
-    //        }
-    //        else if (name == "issuanceforms")
-    //        {
-    //            return new Repository.Concrete.Textbase.IssuanceFormsRepo();
-    //        }
-    //        else throw new Exception("No such repository with name " + name);
-    //    }
-    //}
+    public class FileFactory : IFactory
+    {
+        public IRepository GetRepository(string name)
+        {
+            if (name == "Students")
+            {
+                return new Repository.Concrete.File.Repositories.StudentsRepository();
+            }
+            else if (name == "Teachers")
+            {
+                return new Repository.Concrete.File.Repositories.TeachersRepository();
+            }
+            else if (name == "Faculties")
+            {
+                return new Repository.Concrete.File.Repositories.FacultiesRepository();
+            }
+            else throw new Exception("No such repository with name " + name);
+        }
+    }
 }

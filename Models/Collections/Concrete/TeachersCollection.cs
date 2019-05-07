@@ -35,7 +35,7 @@ namespace Models.Collections.Concrete
             {
                 if (te.Id == teacher.Id)
                 {
-                    Teachers.Remove(te);
+                    Teachers[Teachers.IndexOf(te)] = teacher;
                     break;
                 }
             }

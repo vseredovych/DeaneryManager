@@ -51,11 +51,17 @@
     <Compile Include="Concrete\Database\Repositories\FacultiesRepository.cs" />
     <Compile Include="Concrete\Database\Repositories\StudentsRepository.cs" />
     <Compile Include="Concrete\Database\Repositories\TeachersRepository.cs" />
+    <Compile Include="Concrete\File\Core\Database.cs" />
+    <Compile Include="Concrete\File\Core\DatabaseHelper.cs" />
+    <Compile Include="Concrete\File\Core\FileHelper.cs" />
+    <Compile Include="Concrete\File\Core\Repository.cs" />
+    <Compile Include="Concrete\File\Core\Table.cs" />
+    <Compile Include="Concrete\File\Core\TablesRepository.cs" />
+    <Compile Include="Concrete\File\Repositories\FacultiesRepository.cs" />
+    <Compile Include="Concrete\File\Repositories\StudentsRepository.cs" />
+    <Compile Include="Concrete\File\Repositories\TeachersRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Concrete\File\Core\" />
-    <Folder Include="Concrete\File\Repositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
