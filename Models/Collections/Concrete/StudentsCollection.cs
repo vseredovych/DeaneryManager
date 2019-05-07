@@ -35,13 +35,18 @@ namespace Models.Collections.Concrete
             {
                 if (st.Id == student.Id)
                 {
-                    Students.Remove(st);
+                    Students[Students.IndexOf(st)] = student;
+                    break;
                 }
             }
         }
         public void Delete(int id)
         {
             Students.Remove(GetByID(id));
+        }
+        public void Delete(Student student)
+        {
+            Students.Remove(student);
         }
 
         public List<Student> GetAll()

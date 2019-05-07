@@ -37,12 +37,17 @@ namespace Models.Collections.Concrete
                 if (fa.Id == faculty.Id)
                 {
                     Faculties.Remove(fa);
+                    break;
                 }
             }
         }
         public void Delete(int id)
         {
             Faculties.Remove(GetByID(id));
+        }
+        public void Delete(Faculty faculty)
+        {
+            Faculties.Remove(faculty);
         }
         public List<Faculty> GetAll()
         {

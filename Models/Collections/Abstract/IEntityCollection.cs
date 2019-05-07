@@ -11,6 +11,7 @@ namespace Models.Collections.Abstract
         void Add(T entity);
         void Update(T entity);
         void Delete(int id);
+        void Delete(T entity);
         List<T> GetAll();
         T GetByID(int id);
         int Length();

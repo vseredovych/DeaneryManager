@@ -13,7 +13,8 @@ namespace Menu.Abstract
         bool Add(IRepository repository, object collection);
         bool Delete(IRepository repository, object collection, long id);
         bool Update(IRepository repository, object collection, long id);
+        void Print(object collection, long id);
         //List<IEntity> GetAll();
-        int Length(object studentsCollection);
+        int Length(object collection);
     }
 }

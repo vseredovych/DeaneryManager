@@ -16,7 +16,7 @@ namespace Models.Entities.Concrete
         public override string ToString()
         {
             return string.Format(
-                            "Id; {0}\tFirstName: {1}\tLastName: {2}\tFaculty: {3}\tScholarship: {4}\tDob: {5}",
+                            "Id: {0}\tFirstName: {1}\tLastName: {2}\tFaculty: {3}\tScholarship: {4}\tDob: {5}",
                             Id, FirstName, LastName, Faculty, Scholarship, Dob);
         }
     }

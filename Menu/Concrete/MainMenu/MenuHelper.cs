@@ -46,7 +46,13 @@ namespace Menu.Concrete.MainMenu
                 Console.WriteLine(" - " + operations[i] + "\t");
             }
         }
-
+        public static void PrintArrow(int index1, int index2)
+        {
+            if (index1 == index2)
+            {
+                Console.Write("-->");
+            }
+        }
         public static string InputString(string oldString)
         {
             string temp = "";

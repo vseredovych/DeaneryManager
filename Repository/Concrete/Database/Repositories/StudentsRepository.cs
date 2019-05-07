@@ -83,7 +83,11 @@ namespace Repository.Concrete.Database.Repositories
                 while (dataReader.Read())
                 {
                     student.Id = Convert.ToInt64(dataReader["Id"]);
-
+                    student.FirstName = dataReader["FirstName"].ToString();
+                    student.LastName = dataReader["LastName"].ToString();
+                    student.Faculty = Convert.ToString(dataReader["Faculty"]);
+                    student.Scholarship = Convert.ToDouble(dataReader["Scholarship"]);
+                    student.Dob = Convert.ToDateTime(dataReader["Dob"]);
                 }
                 return student;
             }

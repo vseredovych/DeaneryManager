@@ -10,7 +10,7 @@ using Models.Entities.Abstract;
 
 namespace Repository.Concrete.Database.Repositories
 {
-    public class TeachersOperatinos : IRepository
+    public class TeachersRepository : IRepository
     {
         string databaseTable = "Teachers";
         DbHelper dbManager = new DbHelper();

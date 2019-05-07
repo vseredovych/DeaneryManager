@@ -36,6 +36,7 @@ namespace Models.Collections.Concrete
                 if (te.Id == teacher.Id)
                 {
                     Teachers.Remove(te);
+                    break;
                 }
             }
         }
@@ -43,7 +44,10 @@ namespace Models.Collections.Concrete
         {
             Teachers.Remove(GetByID(id));
         }
-
+        public void Delete(Teacher teacher)
+        {
+            Teachers.Remove(teacher);
+        }
         public List<Teacher> GetAll()
         {
             return Teachers;

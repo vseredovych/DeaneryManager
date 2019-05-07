@@ -85,7 +85,7 @@ namespace Menu.Concrete.MainMenu
             do
             {
                 Console.Clear();
-                PrintCollection(choosenKey);
+                PrintCollection(choosenKey, chooseKey);
                 MenuHelper.PrintOperations();
 
                 action = Console.ReadKey(true).Key;
@@ -94,23 +94,22 @@ namespace Menu.Concrete.MainMenu
                 {
                     case ConsoleKey.UpArrow:
                         chooseKey -= 1;
-                        MenuHelper.HandleIndex(ref chooseKey, 0, MenuHelper.DetermineCollection(collections[choosenKey]).Length(collections[chooseKey]) - 1);
+                        MenuHelper.HandleIndex(ref chooseKey, 0, MenuHelper.DetermineCollection(collections[choosenKey]).Length(collections[choosenKey]) - 1);
                         break;
                     case ConsoleKey.DownArrow:
                         chooseKey += 1;
-                        MenuHelper.HandleIndex(ref chooseKey, 0, MenuHelper.DetermineCollection(collections[choosenKey]).Length(collections[chooseKey]) - 1);
+                        MenuHelper.HandleIndex(ref chooseKey, 0, MenuHelper.DetermineCollection(collections[choosenKey]).Length(collections[choosenKey]) - 1);
                         break;
                     case ConsoleKey.D1:
-                        MenuHelper.DetermineCollection(collections[choosenKey]).Add(repositories[choosenKey], collections[chooseKey]);
+                        MenuHelper.DetermineCollection(collections[choosenKey]).Add(repositories[choosenKey], collections[choosenKey]);
                         break;
                     case ConsoleKey.D2:
-                        MenuHelper.DetermineCollection(collections[choosenKey]).Delete(repositories[choosenKey], collections[chooseKey], chooseKey);
+                        MenuHelper.DetermineCollection(collections[choosenKey]).Delete(repositories[choosenKey], collections[choosenKey], chooseKey);
                         break;
                     case ConsoleKey.D3:
-                        MenuHelper.DetermineCollection(collections[choosenKey]).Update(repositories[choosenKey], collections[chooseKey], chooseKey);
+                        MenuHelper.DetermineCollection(collections[choosenKey]).Update(repositories[choosenKey], collections[choosenKey], chooseKey);
                         break;
                     case ConsoleKey.D4:
-                        //SaveTable(table);
                         break;
                     case ConsoleKey.Escape:
                         break;
@@ -131,32 +130,10 @@ namespace Menu.Concrete.MainMenu
                 Console.WriteLine("\t" + collectionNames[i]);
             }
             Console.WriteLine("Enter - choose table");
-
         }
-        private void PrintCollection(int chooseKey)
+        private void PrintCollection(int chosenKey, int chooseKey)
         {
-            //for (MenuHelper.DetermineCollection(collections[chooseKey]))
-            if (chooseKey == 0)
-            {
-                foreach (Student el in ((StudentsCollections)collections[chooseKey]).GetAll())
-                {
-                    Console.WriteLine(el);
-                }
-            }
-            else if (chooseKey == 1)
-            {
-                foreach (Teacher el in ((TeachersCollections)collections[chooseKey]).GetAll())
-                {
-                    Console.WriteLine(el);
-                }
-            }
-            else if (chooseKey == 2)
-            {
-                foreach (Faculty el in ((FacultiesCollection)collections[chooseKey]).GetAll())
-                {
-                    Console.WriteLine(el);
-                }
-            }
+            MenuHelper.DetermineCollection(collections[chosenKey]).Print(collections[chosenKey], chooseKey);
         }
 
     }

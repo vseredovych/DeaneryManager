@@ -7,6 +7,7 @@ using Menu.Abstract;
 using Menu.Concrete.MainMenu;
 using Models.Collections.Concrete;
 using Models.Entities.Concrete;
+using Models.Entities.Abstract;
 using Repository.Abstract;
 using Repository.Concrete.Database.Repositories;
 
@@ -29,6 +30,7 @@ namespace Menu.Concrete.CollectionsMenu
                 student.Scholarship = Convert.ToInt32(Console.ReadLine());
                 Console.Write("Input Date of birth: ");
                 student.Dob = Convert.ToDateTime(Console.ReadLine());
+                ((StudentsRepository)studentsRepo).Insert(student);
                 ((StudentsCollections)studentsCollection).Add(student);
                 return true;
             }
@@ -40,7 +42,8 @@ namespace Menu.Concrete.CollectionsMenu
         }
         public bool Update(IRepository studentsRepo, object studentsCollection, long id)
         {
-            Student oldStudent = (Student)((StudentsRepository)studentsRepo).GetByID((int)id + 1);
+            int index = (int)((Student)(((StudentsCollections)studentsCollection).GetAll()[(int)id])).Id;
+            Student oldStudent = (Student)((StudentsRepository)studentsRepo).GetByID(index);
             Student student = new Student();
             try
             {
@@ -55,7 +58,10 @@ namespace Menu.Concrete.CollectionsMenu
                 student.Scholarship = Convert.ToInt32(MenuHelper.InputString(Convert.ToString(oldStudent.Scholarship)));
                 Console.Write("Input Date of birth (" + oldStudent.Dob + "): ");
                 student.Dob = Convert.ToDateTime(MenuHelper.InputString(Convert.ToString(oldStudent.Dob)));
+                //studentsCollection = ((StudentsRepository)studentsRepo).GetAll(); //.Add(student);
+
                 ((StudentsRepository)studentsRepo).Update(student);
+                ((StudentsCollections)studentsCollection).Update(student);
                 return true;
             }
             catch (Exception ex)
@@ -66,7 +72,20 @@ namespace Menu.Concrete.CollectionsMenu
         }
         public bool Delete(IRepository studentsRepo, object studentsCollection, long id)
         {
+            int index = (int)((Student)(((StudentsCollections)studentsCollection).GetAll()[(int)id])).Id;
+            ((StudentsRepository)studentsRepo).Delete(index) ;
+            ((StudentsCollections)studentsCollection).Delete(index);
+
             return true;
+        }
+        public void Print(object studentsCollection, long id)
+        {
+            StudentsCollections students = ((StudentsCollections)studentsCollection);
+            for (int i = 0; i < students.Length(); i++)
+            {
+                MenuHelper.PrintArrow((int)id, i);
+                Console.WriteLine(students.GetAll()[i]);
+            }
         }
         public int Length(object studentsCollection)
         {///////////
