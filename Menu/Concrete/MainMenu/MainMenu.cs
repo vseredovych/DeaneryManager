@@ -20,16 +20,19 @@ namespace Menu.Concrete.MainMenu
         string[] collectionNames = { "Students", "Teachers", "Faculties" };
         string[] mainMenuStrings = { "show Tables" };
 
-        public static StudentsCollections students;
         IRepository studentsRepo;
         IRepository teachersRepo;
         IRepository facultiesRepo;
         List<IRepository> repositories;
         List<object> collections = new List<object>();
+
         private void ChooseDatabase(string database)
         {
             IFactory factory = FactoryProvider.GetFactory(database);
+
             repositories = new List<IRepository>();
+            repositories.Clear();
+            collections.Clear();
             studentsRepo = factory.GetRepository("Students");
             teachersRepo = factory.GetRepository("Teachers");
             facultiesRepo = factory.GetRepository("Faculties");
@@ -37,7 +40,6 @@ namespace Menu.Concrete.MainMenu
             repositories.Add(teachersRepo);
             repositories.Add(facultiesRepo);
 
-            studentsRepo.GetAll();
             StudentsCollections studentsCollections = new StudentsCollections(studentsRepo.GetAll());
             TeachersCollections teachersCollections = new TeachersCollections(teachersRepo.GetAll());
             FacultiesCollection facultiesCollection = new FacultiesCollection(facultiesRepo.GetAll());
@@ -51,25 +53,25 @@ namespace Menu.Concrete.MainMenu
         public void StartMenu()
         {
             ConsoleKey action;
-            int entityChoise = 1;
+            int databaseChoise = 1;
 
             do
             {
                 Console.Clear();
 
-                PrintDatabases(ref entityChoise);
+                PrintDatabases(ref databaseChoise);
                 action = Console.ReadKey(true).Key;
 
                 switch (action)
                 {
                     case ConsoleKey.UpArrow:
-                        entityChoise -= 1;
+                        databaseChoise -= 1;
                         break;
                     case ConsoleKey.DownArrow:
-                        entityChoise += 1;
+                        databaseChoise += 1;
                         break;
                     case ConsoleKey.Enter:
-                        ChooseDatabase(databaseNames[entityChoise]);
+                        ChooseDatabase(databaseNames[databaseChoise]);
                         ChooseRepositoryMenu();
                         break;
                     case ConsoleKey.D2:
@@ -83,32 +85,31 @@ namespace Menu.Concrete.MainMenu
         public void ChooseRepositoryMenu()
         {
             ConsoleKey action;
-            int entityChoise = 1;
+            int repositoryChoise = 0;
 
             do
             {
                 Console.Clear();
 
-                PrintMainMenu(ref entityChoise);
+                PrintMainMenu(ref repositoryChoise);
                 action = Console.ReadKey(true).Key;
 
                 switch (action)
                 {
                     case ConsoleKey.UpArrow:
-                        entityChoise -= 1;
+                        repositoryChoise -= 1;
                         break;
                     case ConsoleKey.DownArrow:
-                        entityChoise += 1;
+                        repositoryChoise += 1;
                         break;
                     case ConsoleKey.Enter:
-                        CollectionsOerationsMenu(entityChoise);
+                        CollectionsOerationsMenu(repositoryChoise);
                         break;
                     case ConsoleKey.D2:
                         break;
                     case ConsoleKey.Escape:
                         break;
                 }
-
             } while (action != ConsoleKey.Escape);
         }
         public void CollectionsOerationsMenu(int repositoryChoise)
@@ -178,9 +179,9 @@ namespace Menu.Concrete.MainMenu
             }
             Console.WriteLine("Enter - choose database");
         }
-        private void PrintCollection(int entityChoise, int repositoryChoise)
+        private void PrintCollection(int repositoryChoise, int entityChoise)
         {
-            MenuHelper.DetermineCollection(collections[entityChoise]).Print(collections[repositoryChoise], repositoryChoise);
+            MenuHelper.DetermineCollection(collections[repositoryChoise]).Print(collections[repositoryChoise], entityChoise);
         }
 
     }
